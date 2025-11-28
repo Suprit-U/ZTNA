@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zitadel OAuth PKCE + AI Security Analysis</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Role Selection Section -->
+      <section id="role-selection-section" class="card centered">
+        <h1>🔐 Select Application</h1>
+        <p>Choose the application based on your role</p>
+        <div class="role-buttons">
+          <button id="select-user-btn" class="btn-role" data-testid="select-user-btn">
+            <span class="role-icon">👤</span>
+            <span class="role-title">User Application</span>
+            <span class="role-desc">Standard user access</span>
+          </button>
+          <button id="select-manager-btn" class="btn-role" data-testid="select-manager-btn">
+            <span class="role-icon">👥</span>
+            <span class="role-title">Manager Application</span>
+            <span class="role-desc">Manager with user visibility</span>
+          </button>
+          <button id="select-admin-btn" class="btn-role" data-testid="select-admin-btn">
+            <span class="role-icon">⚙️</span>
+            <span class="role-title">Admin Application</span>
+            <span class="role-desc">Full system access</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Login Section -->
+      <section id="login-section" class="card centered hidden">
+        <h1>🔐 OAuth PKCE Authentication</h1>
+        <p id="login-app-name">Login to continue</p>
+        <button id="login-btn" class="btn-primary" data-testid="login-btn">Login with Zitadel</button>
+        <button id="back-to-selection-btn" class="btn-secondary" data-testid="back-to-selection-btn">Back to Selection</button>
+      </section>
+
+      <!-- Loading Indicator -->
+      <div id="loading-indicator" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Analyzing authentication...</p>
+      </div>
+
+      <!-- Access Denied Section -->
+      <section id="access-denied-section" class="card centered hidden">
+        <h2>🚫 Access Denied</h2>
+        <p id="denial-message" data-testid="denial-message"></p>
+        <button id="denied-logout-btn" class="btn-secondary" data-testid="denied-logout-btn">Logout</button>
+      </section>
+
+      <!-- User Dashboard -->
+      <section id="user-dashboard" class="dashboard hidden">
+        <div class="dashboard-header">
+          <div>
+            <h1 data-testid="user-greeting">Hi <span id="user-name"></span>, welcome</h1>
+            <p class="user-role-badge" data-testid="user-role-badge">User Access</p>
+          </div>
+          <button id="user-logout-btn" class="btn-logout" data-testid="user-logout-btn">Logout</button>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3>🔑 Access Token</h3>
+            <pre id="user-access-token" data-testid="user-access-token"></pre>
+          </div>
+
+          <div class="card">
+            <h3>🆔 ID Token</h3>
+            <pre id="user-id-token" data-testid="user-id-token"></pre>
+          </div>
+
+          <div class="card">
+            <h3>📋 Decoded Claims</h3>
+            <pre id="user-claims" data-testid="user-claims"></pre>
+          </div>
+
+          <div class="card">
+            <h3>👤 User Roles</h3>
+            <pre id="user-roles-display" data-testid="user-roles-display"></pre>
+          </div>
+
+          <div class="card highlight">
+            <h3>⏰ Login Details</h3>
+            <div class="login-time-display" data-testid="login-time-display">
+              <div class="detail-row">
+                <strong>Login Time:</strong> <span id="user-login-time"></span>
+              </div>
+              <div class="detail-row">
+                <strong>Username:</strong> <span id="user-username"></span>
+              </div>
+              <div class="detail-row">
+                <strong>IP Address:</strong> <span id="user-ip"></span>
+              </div>
+              <div class="detail-row">
+                <strong>Location:</strong> <span id="user-location"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Manager Dashboard -->
+      <section id="manager-dashboard" class="dashboard hidden">
+        <div class="dashboard-header">
+          <div>
+            <h1 data-testid="manager-greeting">Hi <span id="manager-name"></span>, welcome</h1>
+            <p class="manager-role-badge" data-testid="manager-role-badge">Manager Access</p>
+          </div>
+          <button id="manager-logout-btn" class="btn-logout" data-testid="manager-logout-btn">Logout</button>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Manager's own info -->
+          <div class="card">
+            <h3>🔑 Access Token</h3>
+            <pre id="manager-access-token" data-testid="manager-access-token"></pre>
+          </div>
+
+          <div class="card">
+            <h3>🆔 ID Token</h3>
+            <pre id="manager-id-token" data-testid="manager-id-token"></pre>
+          </div>
+
+          <div class="card">
+            <h3>📋 Decoded Claims</h3>
+            <pre id="manager-claims" data-testid="manager-claims"></pre>
+          </div>
+
+          <div class="card">
+            <h3>👤 User Roles</h3>
+            <pre id="manager-roles-display" data-testid="manager-roles-display"></pre>
+          </div>
+
+          <div class="card highlight">
+            <h3>⏰ Login Details</h3>
+            <div class="login-time-display" data-testid="manager-login-time-display">
+              <div class="detail-row">
+                <strong>Login Time:</strong> <span id="manager-login-time"></span>
+              </div>
+              <div class="detail-row">
+                <strong>Username:</strong> <span id="manager-username"></span>
+              </div>
+              <div class="detail-row">
+                <strong>IP Address:</strong> <span id="manager-ip"></span>
+              </div>
+              <div class="detail-row">
+                <strong>Location:</strong> <span id="manager-location"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- User list for managers -->
+          <div class="card full-width">
+            <h3>👥 User List (Manager View)</h3>
+            <div class="table-container">
+              <table id="manager-users-table" data-testid="manager-users-table">
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>User ID</th>
+                    <th>Role</th>
+                    <th>Last Login</th>
+                    <th>Country</th>
+                  </tr>
+                </thead>
+                <tbody id="manager-users-tbody">
+                  <tr>
+                    <td colspan="5" class="loading-text">Loading users...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Admin Dashboard -->
+      <section id="admin-dashboard" class="dashboard hidden">
+        <div class="dashboard-header">
+          <div>
+            <h1 data-testid="admin-greeting">Hi Admin <span id="admin-name"></span></h1>
+            <p class="admin-role-badge" data-testid="admin-role-badge">Full Admin Access</p>
+          </div>
+          <button id="admin-logout-btn" class="btn-logout" data-testid="admin-logout-btn">Logout</button>
+        </div>
+
+        <!-- Admin Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-content">
+              <h4>Total Logins Today</h4>
+              <p class="stat-value" id="stat-total-logins" data-testid="stat-total-logins">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-content">
+              <h4>High Risk Logins</h4>
+              <p class="stat-value" id="stat-high-risk" data-testid="stat-high-risk">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-content">
+              <h4>Average Risk Score</h4>
+              <p class="stat-value" id="stat-avg-risk" data-testid="stat-avg-risk">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🌙</div>
+            <div class="stat-content">
+              <h4>Outside Business Hours</h4>
+              <p class="stat-value" id="stat-outside-hours" data-testid="stat-outside-hours">0</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Admin's own info -->
+          <div class="card">
+            <h3>🔑 Access Token</h3>
+            <pre id="admin-access-token" data-testid="admin-access-token"></pre>
+          </div>
+
+          <div class="card">
+            <h3>🆔 ID Token</h3>
+            <pre id="admin-id-token" data-testid="admin-id-token"></pre>
+          </div>
+
+          <div class="card">
+            <h3>📋 Decoded Claims</h3>
+            <pre id="admin-claims" data-testid="admin-claims"></pre>
+          </div>
+
+          <div class="card">
+            <h3>👤 User Roles</h3>
+            <pre id="admin-roles-display" data-testid="admin-roles-display"></pre>
+          </div>
+
+          <div class="card highlight">
+            <h3>⏰ Login Details</h3>
+            <div class="login-time-display" data-testid="admin-login-time-display">
+              <div class="detail-row">
+                <strong>Login Time:</strong> <span id="admin-login-time"></span>
+              </div>
+              <div class="detail-row">
+                <strong>Username:</strong> <span id="admin-username"></span>
+              </div>
+              <div class="detail-row">
+                <strong>IP Address:</strong> <span id="admin-ip"></span>
+              </div>
+              <div class="detail-row">
+                <strong>Location:</strong> <span id="admin-location"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Summary -->
+          <div class="card ai-card">
+            <h3>🧠 AI Security Analysis</h3>
+            <pre id="admin-ai-summary" class="ai-summary" data-testid="admin-ai-summary">Analyzing...</pre>
+          </div>
+
+          <!-- Authentication Logs -->
+          <div class="card full-width">
+            <h3>📋 Authentication Logs</h3>
+            <div class="table-container">
+              <table id="admin-logs-table" data-testid="admin-logs-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Login Time</th>
+                    <th>Country</th>
+                    <th>Risk Score</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-logs-tbody">
+                  <tr>
+                    <td colspan="7" class="loading-text">Loading logs...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

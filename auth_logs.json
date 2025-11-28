@@ -1,0 +1,185 @@
+[
+  {
+    "username": "test_user",
+    "userId": "123456",
+    "roles": [
+      "User"
+    ],
+    "loginTime": "2025-01-15T10:30:00Z",
+    "country": "India",
+    "ip": "192.168.1.1",
+    "status": "success",
+    "timestamp": "2025-11-28T16:13:44.069Z",
+    "riskScore": 5,
+    "riskFactors": [
+      "Login during business hours (8 AM - 5 PM IST)"
+    ]
+  },
+  {
+    "username": "admin_test",
+    "userId": "admin123",
+    "roles": [
+      "Admin"
+    ],
+    "loginTime": "2025-01-15T22:30:00Z",
+    "country": "USA",
+    "ip": "1.2.3.4",
+    "status": "success",
+    "timestamp": "2025-11-28T16:13:54.802Z",
+    "riskScore": 90,
+    "riskFactors": [
+      "Login during unusual hours (2 AM - 5 AM IST)",
+      "Admin privileges detected",
+      "Login from outside India"
+    ]
+  },
+  {
+    "username": "manager_test",
+    "userId": "mgr123",
+    "roles": [
+      "Manager"
+    ],
+    "loginTime": "2025-01-15T12:00:00Z",
+    "country": "India",
+    "ip": "192.168.1.5",
+    "status": "success",
+    "timestamp": "2025-11-28T16:13:54.815Z",
+    "riskScore": 20,
+    "riskFactors": [
+      "Login outside business hours"
+    ]
+  },
+  {
+    "username": "user_denied",
+    "userId": "usr456",
+    "roles": [
+      "User"
+    ],
+    "loginTime": "2025-01-15T10:00:00Z",
+    "country": "Canada",
+    "ip": "5.6.7.8",
+    "status": "denied_country",
+    "reason": "Access not permitted from Canada",
+    "timestamp": "2025-11-28T16:13:54.828Z"
+  },
+  {
+    "username": "test_low_risk",
+    "userId": "low123",
+    "roles": [
+      "User"
+    ],
+    "loginTime": "2025-01-15T09:00:00Z",
+    "country": "India",
+    "ip": "192.168.1.100",
+    "status": "success",
+    "timestamp": "2025-11-28T16:15:06.473Z",
+    "riskScore": 5,
+    "riskFactors": [
+      "Login during business hours (8 AM - 5 PM IST)"
+    ]
+  },
+  {
+    "username": "test_high_risk",
+    "userId": "high123",
+    "roles": [
+      "Admin"
+    ],
+    "loginTime": "2025-01-15T03:00:00Z",
+    "country": "USA",
+    "ip": "1.1.1.1",
+    "status": "success",
+    "timestamp": "2025-11-28T16:15:06.488Z",
+    "riskScore": 55,
+    "riskFactors": [
+      "Login during business hours (8 AM - 5 PM IST)",
+      "Admin privileges detected",
+      "Login from outside India"
+    ]
+  },
+  {
+    "username": "zitadel-admin@zitadel.localhost",
+    "userId": "348695124085637123",
+    "roles": [
+      "Admins",
+      "Managers",
+      "Users"
+    ],
+    "loginTime": "2025-11-28T16:42:52.684Z",
+    "country": "India",
+    "ip": "117.247.122.47",
+    "status": "denied_role",
+    "reason": "User role(s) [Admins, Managers, Users] do not match selected app (Admin)",
+    "timestamp": "2025-11-28T16:42:52.693Z"
+  },
+  {
+    "username": "zitadel-admin@zitadel.localhost",
+    "userId": "348695124085637123",
+    "roles": [
+      "Admins",
+      "Managers",
+      "Users"
+    ],
+    "loginTime": "2025-11-28T16:42:53.333Z",
+    "country": "India",
+    "ip": "117.247.122.47",
+    "status": "denied_role",
+    "reason": "User role(s) [Admins, Managers, Users] do not match selected app (Admin)",
+    "timestamp": "2025-11-28T16:42:53.337Z"
+  },
+  {
+    "username": "zitadel-admin@zitadel.localhost",
+    "userId": "348695124085637123",
+    "roles": [
+      "Admins",
+      "Managers",
+      "Users"
+    ],
+    "loginTime": "2025-11-28T16:43:02.159Z",
+    "country": "India",
+    "ip": "117.247.122.47",
+    "status": "denied_role",
+    "reason": "User role(s) [Admins, Managers, Users] do not match selected app (Manager)",
+    "timestamp": "2025-11-28T16:43:02.163Z"
+  },
+  {
+    "username": "zitadel-admin@zitadel.localhost",
+    "userId": "348695124085637123",
+    "roles": [
+      "Admins",
+      "Managers",
+      "Users"
+    ],
+    "loginTime": "2025-11-28T16:43:02.876Z",
+    "country": "India",
+    "ip": "117.247.122.47",
+    "status": "denied_role",
+    "reason": "User role(s) [Admins, Managers, Users] do not match selected app (Manager)",
+    "timestamp": "2025-11-28T16:43:02.879Z"
+  },
+  {
+    "username": "zitadel-admin@zitadel.localhost",
+    "userId": "348695124085637123",
+    "roles": [
+      "Admins"
+    ],
+    "loginTime": "2025-11-28T16:43:25.581Z",
+    "country": "India",
+    "ip": "117.247.122.47",
+    "status": "denied_role",
+    "reason": "User role(s) [Admins] do not match selected app (Admin)",
+    "timestamp": "2025-11-28T16:43:25.586Z"
+  },
+  {
+    "username": "zitadel-admin@zitadel.localhost",
+    "userId": "348695124085637123",
+    "roles": [
+      "Admins"
+    ],
+    "loginTime": "2025-11-28T16:43:26.326Z",
+    "country": "India",
+    "ip": "117.247.122.47",
+    "status": "denied_role",
+    "reason": "User role(s) [Admins] do not match selected app (Admin)",
+    "timestamp": "2025-11-28T16:43:26.330Z"
+  }
+]
